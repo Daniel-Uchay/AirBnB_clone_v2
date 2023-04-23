@@ -1,44 +1,45 @@
 #!/usr/bin/python3
-""" Write a script that starts a Flask web application:
-Your web application must be listening on 0.0.0.0, port 5000
-"""
+"""Starts a Flask web application"""
 
 from flask import Flask
-
-app = Flask("__name__")
+app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def hello():
-    """Return a given string"""
-    return ("Hello HBNB!")
+def hello_holberton():
+    """Returns a string at the root route"""
+    return 'Hello HBNB!'
 
 
-@app.route("/hbnb", strict_slashes=False)
+@app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    """Returns a given string"""
-    return ("HBNB")
+    """Returns a string at the /hbnb route"""
+    return 'HBNB'
 
 
-@app.route("/c/<text>", strict_slashes=False)
-def cText(text):
-    """display C followed by the value of the text variable"""
-    return "C {}".format(text.replace("_", " "))
+@app.route('/c/<text>', strict_slashes=False)
+def cisfun(text):
+    """Returns a string at the /c/<text> route,
+    expands the <text> variable"""
+    new = text.replace('_', ' ')
+    return 'C %s' % new
 
 
-@app.route('/python', strict_slashes=False)
-@app.route("/python/<text>", strict_slashes=False)
-def pythonText(text="is cool"):
-    """display Python followed by the value of the text variable"""
-    return "Python {}".format(text.replace("_", " "))
+@app.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
+def pythoniscool(text):
+    """Returns a string at the /python route, with a default text
+    of 'is cool', or the expansion of <text>"""
+    new = text.replace('_', ' ')
+    return 'Python %s' % new
 
 
-@app.route("/number/<int:n>", strict_slashes=False)
-def isNumber(n):
-    """display “n is a number” only if n is an integer"""
-    if isinstance(n, int):
-        return "{} is a number".format(n)
+@app.route('/number/<int:n>', strict_slashes=False)
+def number(n):
+    """Returns a string at the /number/<n> route,
+    only if n is an int"""
+    if type(n) == int:
+        return '%i is a number' % n
 
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=None)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
